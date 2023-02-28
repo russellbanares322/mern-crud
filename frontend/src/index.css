@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Roboto Serif", serif;
+  }
+}
+@layer components {
+  .label {
+    font-size: 0.9rem;
+    color: #f3f3f3;
+    padding-bottom: 0.5rem;
+  }
+  .input {
+    width: 15rem;
+    height: 2rem;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+}
