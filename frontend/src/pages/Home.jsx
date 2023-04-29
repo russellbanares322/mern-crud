@@ -1,37 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Form from "../components/Form";
 import Workouts from "../components/Workouts";
 import { IoMdAdd } from "react-icons/io";
+import WorkoutContext from "../context/WorkoutContext";
 
 const Home = () => {
-  const [workoutData, setWorkoutData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading } = useContext(WorkoutContext);
   const [showForm, setShowForm] = useState(false);
 
   //Button for showing form
   const handleToggleForm = () => {
     setShowForm(!showForm);
   };
-
-  //Fetching of workout data
-  const handleFetchData = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/workouts");
-      const jsonResponse = await response.json();
-
-      if (response.ok) {
-        setWorkoutData(jsonResponse);
-        setIsLoading(false);
-      }
-    } catch (err) {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    handleFetchData();
-  }, []);
 
   return (
     <div className="h-screen bg-[#F3F3F3]">
@@ -45,12 +25,7 @@ const Home = () => {
         </button>
       </div>
       {isLoading && <p className="text-center text-2xl">Loading...</p>}
-      <div className="mr-4 flex flex-row flex-wrap items-center px-5">
-        {workoutData &&
-          workoutData.map((workout) => (
-            <Workouts key={workout._id} workout={workout} />
-          ))}
-      </div>
+      <Workouts />
       {showForm && <Form handleToggleForm={handleToggleForm} />}
     </div>
   );

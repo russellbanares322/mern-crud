@@ -1,48 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { IoClose } from "react-icons/io5";
+import WorkoutContext from "../context/WorkoutContext";
 
 const Form = ({ handleToggleForm }) => {
-  const [title, setTitle] = useState("");
-  const [reps, setReps] = useState("" || 0);
-  const [load, setLoad] = useState("" || 0);
-  const [errMessage, setErrMessage] = useState(null);
+  const { title, setTitle, reps, setReps, load, setLoad, handleAddData } =
+    useContext(WorkoutContext);
 
   const mainColor = "#008374";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const workout = { title, reps, load };
-
-    const response = await fetch("/api/workouts", {
-      method: "POST",
-      body: JSON.stringify(workout),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const jsonResponse = await response.json();
-
-    if (!response.ok) {
-      setErrMessage(jsonResponse.error);
-      console.log(jsonResponse.error);
-    }
-    if (response.ok) {
-      setTitle("");
-      setReps("");
-      setLoad("");
-      setErrMessage(null);
-      alert("newWorkoutAdded");
-      console.log(jsonResponse);
-    }
-  };
-
   return (
-    <div className="flex h-full translate-y-[-350px] items-center justify-center bg-slate-900">
-      <form
-        onSubmit={handleSubmit}
-        className={`flex flex-col rounded-[0.5rem] bg-[${mainColor}] relative p-[2rem]`}
-      >
+    <div className="h-modal fixed top-4 left-0 right-0 z-50 w-auto items-center justify-center overflow-y-auto overflow-x-hidden bg-slate-900">
+      <form className={`flex flex-col  bg-[${mainColor}] w-auto p-[2rem]`}>
         <IoClose
           onClick={handleToggleForm}
           className="absolute top-2 right-3 mb-[20px] cursor-pointer"
@@ -73,7 +41,10 @@ const Form = ({ handleToggleForm }) => {
           type="number"
           placeholder="Workout loads..."
         />
-        <button className="mt-2 mb-3 h-[2rem] rounded-sm bg-white">
+        <button
+          onClick={handleAddData}
+          className="mt-2 mb-3 h-[2rem] rounded-sm bg-white"
+        >
           Add Workout
         </button>
       </form>
