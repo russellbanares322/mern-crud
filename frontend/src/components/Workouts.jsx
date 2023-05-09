@@ -1,10 +1,26 @@
-import React, { useContext } from "react";
+import React, { useEffect } from "react";
 import { IoTrashOutline } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
-import WorkoutContext from "../context/WorkoutContext";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllWorkout } from "../api/workoutApi/FetchAllWorkout";
+import { deleteWorkout } from "../api/workoutApi/deleteWorkout";
 
 const Workouts = () => {
-  const { handleDeleteData, workoutData } = useContext(WorkoutContext);
+  const dispatch = useDispatch();
+  const workoutData = useSelector((state) => state.workout.workouts);
+
+  const handleDeleteWorkout = (selectedId) => {
+    if (window.confirm("Are you sure? ")) {
+      dispatch(deleteWorkout(selectedId)).then(() => {
+        fetchAllWorkout();
+      });
+    }
+  };
+
+  //Fetching of all workouts
+  useEffect(() => {
+    dispatch(fetchAllWorkout());
+  }, []);
 
   return (
     <div className=" mr-4 mb-5">
@@ -20,7 +36,7 @@ const Workouts = () => {
                 size={23}
               />
               <IoTrashOutline
-                onClick={() => handleDeleteData(workout._id)}
+                onClick={() => handleDeleteWorkout(workout._id)}
                 className="absolute right-3 top-3 cursor-pointer"
                 size={22}
               />

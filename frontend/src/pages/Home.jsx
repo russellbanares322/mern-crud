@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import Form from "../components/Form";
 import Workouts from "../components/Workouts";
 import { IoMdAdd } from "react-icons/io";
-import WorkoutContext from "../context/WorkoutContext";
+import { useSelector } from "react-redux";
 
 const Home = () => {
-  const { isLoading } = useContext(WorkoutContext);
+  const isLoading = useSelector((state) => state.workout.isLoading);
   const [showForm, setShowForm] = useState(false);
 
   //Button for showing form
