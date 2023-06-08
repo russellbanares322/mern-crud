@@ -1,11 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Form from "../components/Form";
 import Workouts from "../components/Workouts";
 import { IoMdAdd } from "react-icons/io";
-import { useSelector } from "react-redux";
 
 const Home = () => {
-  const isLoading = useSelector((state) => state.workout.isLoading);
   const [showForm, setShowForm] = useState(false);
 
   //Button for showing form
@@ -24,7 +22,6 @@ const Home = () => {
           <IoMdAdd />
         </button>
       </div>
-      {isLoading && <p className="text-center text-2xl">Loading...</p>}
       <Workouts />
       {showForm && <Form handleToggleForm={handleToggleForm} />}
     </div>

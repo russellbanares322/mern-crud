@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { useDispatch } from "react-redux";
 import { createWorkout } from "../api/workoutApi/createWorkout";
-import { fetchAllWorkout } from "../api/workoutApi/FetchAllWorkout";
 
 const Form = ({ handleToggleForm }) => {
   const mainColor = "#008374";
-  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     title: "",
     reps: 0,
     load: 0,
   });
 
-  const handleAddData = (e) => {
+  const handleAddData = async (e) => {
     e.preventDefault();
-    dispatch(createWorkout(formData)).then(() => {
-      dispatch(fetchAllWorkout());
-    });
+    await createWorkout(formData);
   };
 
   const handleFormChange = (e) => {

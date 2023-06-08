@@ -1,25 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IoTrashOutline } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAllWorkout } from "../api/workoutApi/FetchAllWorkout";
 import { deleteWorkout } from "../api/workoutApi/deleteWorkout";
+import { getAllWorkout } from "../api/workoutApi/getAllWorkout";
 
 const Workouts = () => {
-  const dispatch = useDispatch();
-  const workoutData = useSelector((state) => state.workout.workouts);
+  const [workoutData, setWorkoutData] = useState([]);
 
-  const handleDeleteWorkout = (selectedId) => {
-    if (window.confirm("Are you sure? ")) {
-      dispatch(deleteWorkout(selectedId)).then(() => {
-        fetchAllWorkout();
-      });
+  const handleDeleteWorkout = async (selectedId) => {
+    if (
+      window.confirm(
+        "Deleting this data will remove it permanently, are you sure?"
+      )
+    ) {
+      await deleteWorkout(selectedId);
+      setWorkoutData(
+        workoutData.filter((workout) => workout._id !== selectedId)
+      );
     }
+  };
+
+  const fetchAllWorkout = async () => {
+    const workouts = await getAllWorkout();
+    setWorkoutData(workouts);
   };
 
   //Fetching of all workouts
   useEffect(() => {
-    dispatch(fetchAllWorkout());
+    fetchAllWorkout();
   }, []);
 
   return (
