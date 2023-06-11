@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { IoTrashOutline } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
 import { deleteWorkout } from "../api/workoutApi/deleteWorkout";
-import { getAllWorkout } from "../api/workoutApi/getAllWorkout";
+import WorkoutContext from "../context/WorkoutContext";
 
 const Workouts = () => {
-  const [workoutData, setWorkoutData] = useState([]);
+  const { workoutData, setWorkoutData, setSelectedWorkout } =
+    useContext(WorkoutContext);
 
   const handleDeleteWorkout = async (selectedId) => {
     if (
@@ -20,15 +21,9 @@ const Workouts = () => {
     }
   };
 
-  const fetchAllWorkout = async () => {
-    const workouts = await getAllWorkout();
-    setWorkoutData(workouts);
+  const handleSelectWorkout = (selectedWorkoutData) => {
+    setSelectedWorkout(selectedWorkoutData);
   };
-
-  //Fetching of all workouts
-  useEffect(() => {
-    fetchAllWorkout();
-  }, []);
 
   return (
     <div className=" mr-4 mb-5">
@@ -41,6 +36,7 @@ const Workouts = () => {
             >
               <AiOutlineEdit
                 className="absolute right-10 top-3 cursor-pointer"
+                onClick={() => handleSelectWorkout(workout)}
                 size={23}
               />
               <IoTrashOutline

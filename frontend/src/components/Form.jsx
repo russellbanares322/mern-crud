@@ -1,32 +1,83 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { createWorkout } from "../api/workoutApi/createWorkout";
+import { updateWorkout } from "../api/workoutApi/updateWorkout";
 
-const Form = ({ handleToggleForm }) => {
+import WorkoutContext from "../context/WorkoutContext";
+
+const Form = ({ showFormModal, setShowFormModal, handleCloseFormModal }) => {
+  const { setWorkoutData, selectedWorkout, setSelectedWorkout } =
+    useContext(WorkoutContext);
   const mainColor = "#008374";
   const [formData, setFormData] = useState({
     title: "",
-    reps: 0,
-    load: 0,
+    reps: 1,
+    load: 1,
   });
+  const isFormDirty = !formData.title;
 
   const handleAddData = async (e) => {
     e.preventDefault();
-    await createWorkout(formData);
+    const updatedWorkoutData = await createWorkout(formData);
+    setWorkoutData(updatedWorkoutData);
+    handleCloseFormModal();
+    setFormData({
+      title: "",
+      reps: 1,
+      load: 1,
+    });
+  };
+
+  const handleUpdateData = async (e) => {
+    e.preventDefault();
+    await updateWorkout(selectedWorkout._id, {
+      title: formData.title,
+      reps: formData.reps,
+      load: formData.load,
+    });
+    setSelectedWorkout(null);
+    setFormData({
+      title: "",
+      reps: 1,
+      load: 1,
+    });
+    handleCloseFormModal();
   };
 
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    if (selectedWorkout !== null) {
+      setFormData({
+        title: selectedWorkout.title,
+        reps: selectedWorkout.reps,
+        load: selectedWorkout.load,
+      });
+      setShowFormModal(true);
+    } else {
+      setFormData({
+        title: "",
+        reps: 1,
+        load: 1,
+      });
+      setShowFormModal(false);
+    }
+  }, [selectedWorkout]);
+
   return (
-    <div className="h-modal fixed top-4 left-0 right-0 z-50 w-auto items-center justify-center overflow-y-auto overflow-x-hidden bg-slate-900">
-      <form className={`flex flex-col  bg-[${mainColor}] w-auto p-[2rem]`}>
+    <div
+      className={`visible fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 duration-500 ${
+        !showFormModal && "hidden"
+      }`}
+    >
+      <form className="relative flex w-auto  flex-col rounded-md bg-white p-[2rem]">
         <IoClose
-          onClick={handleToggleForm}
+          onClick={handleCloseFormModal}
           className="absolute top-2 right-3 mb-[20px] cursor-pointer"
           size={27}
-          color="white"
+          color="black"
         />
         <label className="label">Workout Title</label>
         <input
@@ -56,8 +107,9 @@ const Form = ({ handleToggleForm }) => {
           placeholder="Workout loads..."
         />
         <button
-          onClick={handleAddData}
-          className="mt-2 mb-3 h-[2rem] rounded-sm bg-white"
+          disabled={isFormDirty}
+          onClick={selectedWorkout === null ? handleAddData : handleUpdateData}
+          className={`mt-2 mb-3 h-[2rem] rounded-sm text-white bg-[${mainColor}] disabled:bg-zinc-400 disabled:text-black`}
         >
           Add Workout
         </button>
