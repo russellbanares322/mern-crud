@@ -6,7 +6,7 @@ import { updateWorkout } from "../api/workoutApi/updateWorkout";
 import WorkoutContext from "../context/WorkoutContext";
 
 const Form = ({ showFormModal, setShowFormModal, handleCloseFormModal }) => {
-  const { setWorkoutData, selectedWorkout, setSelectedWorkout } =
+  const { workoutData, setWorkoutData, selectedWorkout, setSelectedWorkout } =
     useContext(WorkoutContext);
   const mainColor = "#008374";
   const [formData, setFormData] = useState({
@@ -15,11 +15,12 @@ const Form = ({ showFormModal, setShowFormModal, handleCloseFormModal }) => {
     load: 1,
   });
   const isFormDirty = !formData.title;
+  const isForEdit = selectedWorkout !== null;
 
   const handleAddData = async (e) => {
     e.preventDefault();
     const updatedWorkoutData = await createWorkout(formData);
-    setWorkoutData(updatedWorkoutData);
+    setWorkoutData([updatedWorkoutData, ...workoutData]);
     handleCloseFormModal();
     setFormData({
       title: "",
@@ -35,6 +36,13 @@ const Form = ({ showFormModal, setShowFormModal, handleCloseFormModal }) => {
       reps: formData.reps,
       load: formData.load,
     });
+    setWorkoutData((prevWorkoutData) =>
+      prevWorkoutData.map((workout) =>
+        workout._id === selectedWorkout._id
+          ? { ...workout, ...formData }
+          : workout
+      )
+    );
     setSelectedWorkout(null);
     setFormData({
       title: "",
@@ -49,7 +57,7 @@ const Form = ({ showFormModal, setShowFormModal, handleCloseFormModal }) => {
   };
 
   useEffect(() => {
-    if (selectedWorkout !== null) {
+    if (isForEdit) {
       setFormData({
         title: selectedWorkout.title,
         reps: selectedWorkout.reps,
@@ -108,10 +116,10 @@ const Form = ({ showFormModal, setShowFormModal, handleCloseFormModal }) => {
         />
         <button
           disabled={isFormDirty}
-          onClick={selectedWorkout === null ? handleAddData : handleUpdateData}
+          onClick={!isForEdit ? handleAddData : handleUpdateData}
           className={`mt-2 mb-3 h-[2rem] rounded-sm text-white bg-[${mainColor}] disabled:bg-zinc-400 disabled:text-black`}
         >
-          Add Workout
+          {isForEdit ? "Save Changes" : " Add Workout"}
         </button>
       </form>
     </div>

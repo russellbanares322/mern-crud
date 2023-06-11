@@ -45,8 +45,8 @@ const Workouts = () => {
                 size={22}
               />
               <p className="mb-2 text-xl">{workout.title}</p>
-              <p>Load: {workout.load}</p>
               <p>Reps: {workout.reps}</p>
+              <p>Load: {workout.load}</p>
               <p className="pt-10">
                 {new Date(workout.createdAt).toDateString()}
               </p>
