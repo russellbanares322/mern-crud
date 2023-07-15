@@ -6,6 +6,10 @@ module.exports = {
     fontFamily: {
       sans: ["Roboto Serif", "serif"],
     },
+    colors: {
+      orange: "#DF622C",
+      white: "#ffffff",
+    },
   },
   plugins: [],
 };
