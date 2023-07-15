@@ -1,19 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
+import { HiMenu, HiOutlineX } from "react-icons/hi";
 
 const Navbar = () => {
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  const handleToggleNav = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+
   return (
-    <nav className="bg-[#008374] p-5 text-white md:flex md:items-center md:justify-start">
-      <div>
+    <nav className="bg-white p-5 md:flex md:items-center md:justify-start">
+      <div className="flex items-center justify-between md:flex">
         <p className="mr-10 cursor-pointer text-lg">Logo</p>
+        <div onClick={handleToggleNav}>
+          {!isNavOpen ? (
+            <HiMenu className="cursor-pointer md:hidden" size={25} />
+          ) : (
+            <HiOutlineX className="cursor-pointer md:hidden" size={25} />
+          )}
+        </div>
       </div>
-      <ul className="gap-3 md:mr-auto md:flex md:items-center">
-        <li>Home</li>
-        <li>About</li>
-        <li>Contact</li>
-        <li>Services</li>
+      <ul
+        className={`${
+          isNavOpen ? "opacity-1 top-[60px]" : "top-[-400px] opacity-0"
+        } md:opacity-1 absolute left-0 flex w-full flex-col items-center justify-center gap-3 border-t border-t-green bg-white p-5 pt-7 text-black transition-all duration-500 ease-in-out md:static md:mr-auto md:flex md:w-auto md:flex-row md:items-center md:justify-start md:border-none md:p-0 md:py-0 md:text-black`}
+      >
+        <li className="cursor-pointer text-[0.9rem]">Home</li>
+        <li className="cursor-pointer text-[0.9rem]">About</li>
+        <li className="cursor-pointer text-[0.9rem]">Contact</li>
+        <li className="cursor-pointer text-[0.9rem]">Services</li>
+        <button className="visible w-full rounded-sm bg-green py-2 text-[1rem] text-white md:hidden">
+          Login
+        </button>
       </ul>
-      <button className="rounded-sm bg-orange px-3 py-1 text-[1rem] md:visible">
-        XL Device
+      <button className="hidden rounded-sm bg-green px-5 py-1 text-[1rem] text-white md:block">
+        Login
       </button>
     </nav>
   );

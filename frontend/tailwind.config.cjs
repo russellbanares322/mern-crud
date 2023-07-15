@@ -7,8 +7,10 @@ module.exports = {
       sans: ["Roboto Serif", "serif"],
     },
     colors: {
-      orange: "#DF622C",
-      white: "#ffffff",
+      white: "#FFFFFF",
+      green: "#017143",
+      black: "#343434",
+      gray: "#4C4C4C",
     },
   },
   plugins: [],
