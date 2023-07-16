@@ -11,7 +11,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Router>
       <WorkoutProvider>
         <App />
-        <Toaster position="top-center" reverseOrder={false} />
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          toastOptions={{
+            duration: 2000,
+          }}
+        />
       </WorkoutProvider>
     </Router>
   </React.StrictMode>

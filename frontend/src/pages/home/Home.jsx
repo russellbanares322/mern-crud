@@ -1,5 +1,5 @@
 import React from "react";
-import DynamicForm from "../form/DynamicForm";
+import DynamicForm from "../../components/form/DynamicForm";
 
 const Home = () => {
   return (
