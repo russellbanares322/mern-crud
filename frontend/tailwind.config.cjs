@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      sans: ["Roboto Serif", "serif"],
+      quicksand: "'Quicksand', serif",
     },
     colors: {
       white: "#FFFFFF",

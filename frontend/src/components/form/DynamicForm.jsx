@@ -80,6 +80,16 @@ const DynamicForm = () => {
   };
 
   const handleSaveQuestion = () => {
+    const isNoCorrectAnswerSelected = inputValues.choices.some(
+      (choice) => choice.correctAnswer === false
+    );
+
+    if (isNoCorrectAnswerSelected) {
+      return toast.error(
+        "Please choose a correct answer by checking one of the radio button"
+      );
+    }
+
     setSavedInputValues([...savedInputValues, inputValues]);
     toast.success("Successfully added question");
     setInputValues({
