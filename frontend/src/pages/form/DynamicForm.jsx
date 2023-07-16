@@ -30,14 +30,11 @@ const DynamicForm = () => {
 
     setInputValues({
       ...inputValues,
-      choices: inputValues.choices.map((choice, choiceIndex) =>
-        correctAnswerIdx === choiceIndex
-          ? {
-              ...choice,
-              correctAnswer: checked,
-            }
-          : choice
-      ),
+      choices: inputValues.choices.map((choice, choiceIndex) => ({
+        ...choice,
+        correctAnswer:
+          checked && correctAnswerIdx === choiceIndex ? checked : false,
+      })),
     });
   };
 
@@ -82,16 +79,25 @@ const DynamicForm = () => {
 
   const handleSaveQuestion = () => {
     setSavedInputValues([...savedInputValues, inputValues]);
+    setInputValues({
+      question: "",
+      choices: [
+        {
+          option: "",
+          correctAnswer: false,
+        },
+      ],
+    });
   };
 
   return (
     <div className="w-[24rem]">
-      <pre>{JSON.stringify(inputValues, null, 4)}</pre>
       <br />
       <div>
         <div className="flex items-center justify-start gap-5">
           <label className="mr-auto">Question # 1</label>
           <input
+            value={inputValues.question}
             onChange={handleInputChange}
             className="w-[15rem] rounded-md border px-2 py-1 placeholder:text-sm"
             placeholder="Please write question here..."

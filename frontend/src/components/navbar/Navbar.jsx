@@ -22,13 +22,13 @@ const Navbar = () => {
       </div>
       <ul
         className={`${
-          isNavOpen ? "opacity-1 top-[60px]" : "top-[-400px] opacity-0"
-        } md:opacity-1 absolute left-0 flex w-full flex-col items-center justify-center gap-3 border-t border-t-green bg-white p-5 pt-7 text-black transition-all duration-500 ease-in-out md:static md:mr-auto md:flex md:w-auto md:flex-row md:items-center md:justify-start md:border-none md:p-0 md:py-0 md:text-black`}
+          isNavOpen ? "opacity-1 top-[60px]" : "top-[-400px]"
+        } md:opacity-1 absolute left-0 z-50 flex w-full flex-col items-center justify-center gap-3 border-t border-t-green bg-white p-5 pt-7 text-black transition-all duration-500 ease-in-out md:static md:mr-auto md:flex md:w-auto md:flex-row md:items-center md:justify-start md:border-none md:p-0 md:py-0 md:text-black`}
       >
-        <li className="cursor-pointer text-[0.9rem]">Home</li>
-        <li className="cursor-pointer text-[0.9rem]">About</li>
-        <li className="cursor-pointer text-[0.9rem]">Contact</li>
-        <li className="cursor-pointer text-[0.9rem]">Services</li>
+        <li className="cursor-pointer text-[0.9rem] text-black">Home</li>
+        <li className="cursor-pointer text-[0.9rem] text-black">About</li>
+        <li className="cursor-pointer text-[0.9rem] text-black">Contact</li>
+        <li className="cursor-pointer text-[0.9rem] text-black">Services</li>
         <button className="visible w-full rounded-sm bg-green py-2 text-[1rem] text-white md:hidden">
           Login
         </button>
