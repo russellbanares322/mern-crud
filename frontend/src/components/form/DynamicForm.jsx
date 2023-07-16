@@ -106,6 +106,9 @@ const DynamicForm = () => {
   return (
     <div className="mx-auto w-[24rem]">
       <h1 className="mb-6 text-center">Questions</h1>
+      <h1 className="mb-6 text-center">
+        {savedInputValues.length === 0 && "No questions added yet"}
+      </h1>
       {savedInputValues?.map((data, index) => (
         <Questions
           key={index}
@@ -129,7 +132,7 @@ const DynamicForm = () => {
           onClick={handleAddOption}
           className="my-2 h-[2rem] rounded-md bg-green px-2 text-xs text-white disabled:bg-light-green disabled:text-gray"
         >
-          Add Option
+          ADD OPTION
         </button>
       </div>
       {inputValues.choices.map((choice, index) => (
@@ -137,7 +140,7 @@ const DynamicForm = () => {
           <label className="mr-auto ml-8 text-sm">
             Option {getOptionLetter(index + 1)?.letter} :
           </label>
-          <div className="flex items-center justify-evenly gap-4">
+          <div className="flex items-center justify-evenly gap-3">
             <input
               checked={
                 inputValues.choices.find((_, choiceIdx) => choiceIdx === index)
@@ -158,7 +161,7 @@ const DynamicForm = () => {
               }
               onChange={(e) => handleOptionChange(e, index)}
               placeholder="Please write answer here..."
-              className="w-[10rem] rounded-md border px-2 py-1 placeholder:text-sm"
+              className="w-[11rem] rounded-md border px-2 py-1 placeholder:text-sm"
               type="text"
             />
             <button
@@ -183,7 +186,7 @@ const DynamicForm = () => {
           onClick={handleSaveQuestion}
           className="h-[2rem] rounded-md bg-green px-5 text-white disabled:bg-light-green disabled:text-gray"
         >
-          Save Question
+          SAVE QUESTION
         </button>
       </div>
     </div>
