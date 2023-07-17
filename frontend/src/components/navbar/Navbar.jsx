@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white p-5 md:flex md:items-center md:justify-start">
       <div className="flex items-center justify-between md:flex">
-        <p className="mr-10 cursor-pointer text-lg">Logo</p>
+        <p className="mr-10 cursor-pointer text-lg font-bold">Logo</p>
         <div onClick={handleToggleNav}>
           {!isNavOpen ? (
             <HiMenu className="cursor-pointer md:hidden" size={25} />
